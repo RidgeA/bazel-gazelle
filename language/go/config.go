@@ -110,6 +110,9 @@ type goConfig struct {
 	// visible to
 	goVisibility []string
 
+	// TODO: comment
+	goOverrideVisibility []string
+
 	// moduleMode is true if the current directory is intended to be built
 	// as part of a module. Minimal module compatibility won't be supported
 	// if this is true in the root directory. External dependencies may be
@@ -390,6 +393,7 @@ func (*goLang) KnownDirectives() []string {
 		"go_visibility",
 		"importmap_prefix",
 		"prefix",
+		"go_override_visibility",
 	}
 }
 
@@ -651,6 +655,9 @@ Update io_bazel_rules_go to a newer version in your WORKSPACE file.`
 
 			case "prefix":
 				setPrefix(d.Value)
+
+			case "go_override_visibility":
+				gc.goOverrideVisibility = append(gc.goOverrideVisibility, splitValue(d.Value)...)
 			}
 		}
 

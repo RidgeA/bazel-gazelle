@@ -92,6 +92,7 @@ func TestDirectives(t *testing.T) {
 # gazelle:prefix y
 # gazelle:go_grpc_compilers abc, def
 # gazelle:go_proto_compilers foo, bar
+# gazelle:go_override_visibility //foo:__pkg__,//foo:__subpackages__
 `)
 	f, err := rule.LoadData(filepath.FromSlash("test/BUILD.bazel"), "test", content)
 	if err != nil {
@@ -129,6 +130,10 @@ func TestDirectives(t *testing.T) {
 		t.Error("expected goProtoCompilersSet to be set")
 	}
 	if diff := cmp.Diff(gc.goProtoCompilers, []string{"foo", "bar"}); diff != "" {
+		t.Errorf("(-want, +got): %s", diff)
+	}
+
+	if diff := cmp.Diff(gc.goOverrideVisibility, []string{"//foo:__pkg__", "//foo:__subpackages__"}); diff != "" {
 		t.Errorf("(-want, +got): %s", diff)
 	}
 
