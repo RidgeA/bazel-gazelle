@@ -72,6 +72,7 @@ func TestGenerateRules(t *testing.T) {
 	// runfiles are symbolic links, which we need Walk to follow.
 	content := []byte(`
 # gazelle:follow **
+# gazelle:go_override_visibility __subpackages__,__pkg__
 `)
 	f, err := rule.LoadData(filepath.FromSlash("BUILD.config"), "config", content)
 	if err != nil {

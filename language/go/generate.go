@@ -633,6 +633,8 @@ func (g *generator) generateLib(pkg *goPackage, embeds []string) *rule.Rule {
 		if len(getGoConfig(g.c).goVisibility) > 0 {
 			visibility = getGoConfig(g.c).goVisibility
 		}
+	} else if len(gc.goOverrideVisibility) > 0 {
+		visibility = gc.goOverrideVisibility
 	} else {
 		visibility = g.commonVisibility(pkg.importPath)
 	}
